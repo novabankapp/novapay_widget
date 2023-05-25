@@ -19,7 +19,7 @@ export const Main = () => {
         }
     };
      return (
-        <div className=" w-96">
+        <div className="fixed bottom-2.5 right-2.5 w-96">
              <div className="bg-white">   
                 {/*<div>{title}</div>  */}
                 <div className={clsx("relative min-h-44 ",config.styles.classNameContainer)}>
