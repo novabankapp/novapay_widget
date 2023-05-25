@@ -1,5 +1,6 @@
 import { h, render } from "preact";
 import { Configurations } from "./config";
+import './style/index.css';
 import loader from "./loader";
 import { App } from "./App";
 
@@ -12,6 +13,8 @@ const defaultConfig: Configurations = {
     debug: false,
     styles: {}
 };
+
+
 
 // main entry point - calls loader and render Preact app into supplied element
 loader(

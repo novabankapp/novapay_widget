@@ -1,11 +1,10 @@
 import { h } from "preact";
-import style from './main.css';
 import { useAppContext } from "../AppContext";
-import clsx from "clsx";
 import { RouteComponent, Router } from "./Router";
 import { GenerateTRNForm } from "../routes/GenerateTRNForm";
 import { GenerateTRNFeedback } from "../routes/GenerateTRNFeedback";
 import { useState } from "preact/hooks";
+import clsx from "clsx";
 
 export const Main = () => {
      const config = useAppContext()    
@@ -20,11 +19,10 @@ export const Main = () => {
         }
     };
      return (
-        <div className={clsx(style.root)}>
-             <div>     
-                <div className={clsx(
-                    style.container,
-                    config.styles.classNameContainer)}>
+        <div className=" w-96">
+             <div className="bg-white">   
+                {/*<div>{title}</div>  */}
+                <div className={clsx("relative min-h-44 ",config.styles.classNameContainer)}>
                     {<Router
                         onChange={(r) => setTitle(getTitle(r))}
                         routes={{

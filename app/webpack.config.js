@@ -34,22 +34,40 @@ module.exports = (env) => {
             { test: /\.svg/, use: 'svg-url-loader' },
             {
               test: /\.css$/i,
+              include: path.resolve(__dirname, 'src'),
               use: [
                 {
                   loader: 'style-loader',
-                  options: { injectType: 'singletonStyleTag' }
+                  //options: { injectType: 'singletonStyleTag' }
                 },
                 {
                   // allows import CSS as modules
                   loader: 'css-loader',
-                  options: {
+                  /*options: {
                     modules: {
                       // css class names format
                       localIdentName: '[name]-[local]-[hash:base64:5]'
                     },
                     sourceMap: isDevBuild
-                  }
+                  }*/
+                },
+                {
+                  loader: "postcss-loader",
+                  options: {
+                    postcssOptions: {
+                      plugins: [
+                        [
+                          "postcss-preset-env",
+                          {
+                            // Options
+                          },
+                        ],
+                      ],
+                    },
+                  },
                 }
+                
+               
               ]
             },
             // use babel-loader for TS and JS modeles,

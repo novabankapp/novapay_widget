@@ -65,9 +65,12 @@ export default (
                 if (loadedObject.debug) {
                     console.log(`Starting widget [${instanceName}]`, loadedObject);
                 }
-
+                const novaPayElement =  win.document.getElementById("nova-pay")
+                console.log(novaPayElement)
                 // the actual rendering of the widget
-                const wrappingElement = loadedObject.element ?? win.document.body;
+                var wrappingElement = loadedObject.element ?? win.document.body;
+                if(novaPayElement != null)
+                    wrappingElement = novaPayElement
                 targetElement = wrappingElement.appendChild(win.document.createElement('div'));
                 targetElement.setAttribute('id', `widget-${instanceName}`);
                 render(targetElement, loadedObject);
