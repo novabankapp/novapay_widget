@@ -55,6 +55,7 @@
     "inversify": "^6.0.1",
     "moment": "^2.29.4",
     "preact": "^10.14.1",
+    "preact-router": "^4.1.1",
     "react-hook-form": "^7.43.9",
     "reflect-metadata": "^0.1.13",
     "yup": "^1.1.1"

@@ -54,7 +54,7 @@ export const PrimaryTextField = ({value,label,onChanged,placeholder, name,type,}
             {label}        
            </label> : ""
         }
-      <input value={value} name={name} onChange={onChanged} className={`shadow appearance-none border rounded  w-full py-2 px-6 text-black leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
+      <input value={value} name={name}  onChange={onChanged} className={`shadow appearance-none border rounded  w-full py-2 px-6 text-black leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
     </div>
    )
 }

@@ -1,5 +1,5 @@
 import { h, createContext, VNode, ComponentType, createElement } from 'preact';
-import { useState, useEffect } from 'preact/hooks';
+import { useState, useEffect, useContext } from 'preact/hooks';
 
 const DEFAULT_ROUTE = '/';
 
@@ -49,3 +49,7 @@ export const RouteLink = ({ href, children, ...rest }: h.JSX.HTMLAttributes<HTML
         )}
     </RouterContext.Consumer>
 );
+
+export const useNavigation = () => {
+    return useContext(RouterContext)
+}

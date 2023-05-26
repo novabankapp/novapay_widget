@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import TextArea from "../components/TextArea";
 import { Button } from "../components/Button";
-
+import { route } from 'preact-router';
+import { useNavigation } from "../layouts/Router";
 
 type FormData = {
     customerRef: string;
@@ -23,6 +24,7 @@ const schema = yup.object({
   }).required();
 export const GenerateTRNForm = () => {
     const [refValidated, setRefValidated] = useState(false)
+    const {setRoute} = useNavigation()
     const [validating, setValidating] = useState(false)
     const validateRef = async() => {
         setValidating(true)
@@ -33,11 +35,11 @@ export const GenerateTRNForm = () => {
         
     }
     
-      const onSubmit = (data : FormData) => {
+    const onSubmit = () => {
         console.log("submitted")
-       
+        setRoute("/feedback")
          
-      }
+    }
     return (
         <div className="flex flex-col space-y-6 md:space-y-0 bg-white  shadow rounded-lg justify-between">
                 <div className="bg-primary-600 w-full flex rounded bg-opacity-50">
@@ -46,7 +48,10 @@ export const GenerateTRNForm = () => {
                 <div className=" p-8 ">
                    
                     
-                    <form onSubmit={() => onSubmit}>
+                    <form onSubmit={(e) => {
+                         e.preventDefault();
+                        onSubmit()
+                         }}>
                         <div className="flex items-center flex-col  gap-2">
                           
                             <div className='flex flex-col w-full'>

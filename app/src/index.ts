@@ -22,3 +22,22 @@ loader(
     defaultConfig,
     window.document.currentScript,
     (el, config) => render(h(App, { ...config, element: el }), el));
+
+
+/*export type ButtonConfig = {
+    generateTRN : () => void
+}
+export class Nova {
+    _config
+    public constructor(config: ButtonConfig){
+         this._config = config
+    }
+    public render(elementIdentifier: string){
+        const wrappingElement =  window.document.getElementById(elementIdentifier) ?? window.document.body
+        const targetElement = wrappingElement?.appendChild(window.document.createElement('div'));
+        render(h(NovaButton, { ...this._config, element: targetElement }), targetElement)
+    }
+}
+
+window.novaPay = new Nova({ generateTRN : () => console.log("") })
+console.log(novaPay)*/
