@@ -7,6 +7,7 @@
       "rootDir": "./",
       "sourceMap": true,
       "allowJs": false,
+      "esModuleInterop": true,
       "noImplicitAny": false,
       "noUnusedLocals": true,
       "noImplicitThis": true,

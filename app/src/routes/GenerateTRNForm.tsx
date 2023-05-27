@@ -1,91 +1,129 @@
 import { h } from "preact"
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
 import "./generateTRNform.css"
-import { useState } from "preact/hooks";
+import { useMemo, useState } from "preact/hooks";
 import { PrimaryTextField } from "../components/textfield";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import TextArea from "../components/TextArea";
 import { Button } from "../components/Button";
-import { route } from 'preact-router';
-import { useNavigation } from "../layouts/Router";
+import { useIsMounted } from "../hooks";
+import { useTransactionModelController } from "../data/controllers/useTransactionModelController";
+import { transactionRepo } from "../main";
+import { useAppContext } from "../AppContext";
+import { Spinner } from "../components/Spinner";
 
-type FormData = {
-    customerRef: string;
-    amount: number;
-    metadata: string;
-};
-const schema = yup.object({
-    customerRef: yup.string().required(),
-    amount: yup.string().required(),
-    metadata: yup.string()
-  }).required();
 export const GenerateTRNForm = () => {
+    const mounted = useIsMounted();
+    const config = useAppContext();
+    
+    const {generateTRN,validateCustomerRef,validatedCustomerRef,successful,trn} = useTransactionModelController(transactionRepo)
     const [refValidated, setRefValidated] = useState(false)
-    const {setRoute} = useNavigation()
+    const [submitting, setSubmitting] = useState(false);
     const [validating, setValidating] = useState(false)
+    const [customerRefValue, setCustomerRefValue] = useState('');
+    const [amount, setAmount] = useState("")
+    const [metadata, setMetadata] = useState("")
     const validateRef = async() => {
-        setValidating(true)
-        setValidating(false)
         
-         console.log("within")
+        setValidating(true)
+        if( customerRefValue.length > 0){
+            
+            await validateCustomerRef({
+                customerReference: customerRefValue,
+                serviceUniqueIdentifier: config.uniqueIdentifier
+            })
+         }
+        setValidating(false) 
         setRefValidated(true)
         
     }
-    
+    console.log(mounted)
+    const refError = useMemo(
+        () => mounted.current && (!customerRefValue || customerRefValue.length < 1)
+            ? 'Customer ref is required' : '',
+        [customerRefValue,submitting, mounted]);
+    const amountError = useMemo(
+            () => mounted.current && (!amount || !(/^(\d+(?:[\.\,]\d{2})?)$/.test(amount)))
+                ? 'amount is required and should be a number' : '',
+            [amount,submitting, mounted]);
+    const formValid = useMemo(
+                () => ![amountError, refError].reduce((m, n) => m + n) ,
+                [amountError, refError]);
+   
     const onSubmit = () => {
-        console.log("submitted")
-        setRoute("/feedback")
+        if((amount.length < 1 || customerRefValue.length < 1)){
+            setAmount(prev => amount)
+            console.log((/^(\d+(?:[\.\,]\d{2})?)$/.test(amount)))
+            return
+        }
+        if(!formValid){
+            setSubmitting(false);
+            return
+           
+        }
+        console.log("submitted")        
+        setSubmitting(false);
+        generateTRN({
+            customerReference: customerRefValue,
+            serviceUniqueIdentifier: config.uniqueIdentifier,
+            amount: amount as unknown as number,
+            metadata: metadata,
+         })
+       
          
     }
     return (
         <div className="flex flex-col space-y-6 md:space-y-0 bg-white  shadow rounded-lg justify-between">
-                <div className="bg-primary-600 w-full flex rounded bg-opacity-50">
-                    <h1 className="mx-auto font-semibold mb-2">Generate Transaction Reference Pin</h1>                        
-                </div>
-                <div className=" p-8 ">
+                <div className="bg-primary-600 w-full flex flex-col rounded bg-opacity-50">
+                    <h1 className="mx-auto font-semibold mb-2">Generate Transaction Reference Pin</h1> 
+                    {trn !=null ? <p className="text-red-600 font-bold">{`your TRN is : ${trn}`}</p> : null}
                    
-                    
+                </div>
+                <div className=" p-8 flex flex-col">
+                   
+                    {validatedCustomerRef !=null ? <p className="text-primary-600 font-bold">{`customer ref details : ${validatedCustomerRef.customerName}`}</p> : null}
                     <form onSubmit={(e) => {
                          e.preventDefault();
-                        onSubmit()
+                         setSubmitting(true);
+                         onSubmit()
                          }}>
                         <div className="flex items-center flex-col  gap-2">
                           
                             <div className='flex flex-col w-full'>
-                                <p className="text-red-600"></p>
+                                <p className="text-red-600">{refError}</p>
                                 <div className="w-full flex flex-row gap-2 items-center">
                                 
-                                    <PrimaryTextField  name="customerRef" type="text" value=""    label="Customer Reference" placeholder="Customer Reference" />
-                                    
-                                    <button onClick={validateRef}
-                                    className='text-primary-600 h-10 disabled:text-gray-100' 
-                                    disabled={true}>
-                                    {!validating ? `Validate` :  <FontAwesomeIcon className='text-primary-600 spinner'  icon={faSpinner} /> } 
-                                    </button>
+                                    <PrimaryTextField  name="customerRef" onInput={(val) => setCustomerRefValue(val)} type="text" value={customerRefValue}    label="Customer Reference" placeholder="Customer Reference" />
+                                    {!validating ?
+                                        <button onClick={validateRef} type="button"
+                                        className='text-primary-600 h-10 disabled:text-gray-100' 
+                                        disabled={customerRefValue == "" || !config.merchantConfig.hasValidation}>
+                                        Validate  
+                                        </button>
+                                    :  <div className=""> <Spinner color="#19A0CB"/></div> }
                                 </div>
                             </div>
 
                             <div className="w-full flex flex-col">
-                                <p className="text-red-600"></p>
-                                <PrimaryTextField  name="amount" type="text" value="" label="Amount" placeholder="Amount" />
+                                <p className="text-red-600">{amountError}</p>
+                                <PrimaryTextField  name="amount" type="text" onInput={(val) => setAmount(val)} value={amount} label="Amount" placeholder="Amount" />
                                 
                             </div>
 
                             <div className="w-full flex flex-col">
                             <p className="text-red-600"></p>
                             
-                                <TextArea name="metadata"    value="" padX={0} label="Description" padY={0} width="full" height="20" placeholder="" />
+                                <TextArea name="metadata" onInput={(value) => setMetadata(value)}   value={metadata} padX={0} label="Description" padY={0} width="full" height="20" placeholder="" />
                                 
                     
                             </div>
 
                             <div className="w-full  self-start">
-                            {false ? 
-                            <div className='w-full bg-primary-600 flex flex-col h-10 justify-center items-center rounded-md'><FontAwesomeIcon className='text-white spinner'  icon={faSpinner} /></div> 
-                            : <Button disabled={false} 
+                            {submitting ? 
+                            <div className='w-full bg-primary-600 flex flex-col h-10 justify-center items-center rounded-md'>
+                                 <Spinner/>
+                            </div> 
+                            : <Button disabled={!formValid || (config.merchantConfig.hasValidation && !refValidated)} 
                                     type="submit" title="Generate" /> }
                         </div>
                         

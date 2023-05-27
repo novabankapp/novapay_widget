@@ -1,4 +1,6 @@
+import { checkKey } from ".";
 import { Configurations } from "./config";
+import { Merchant } from "./domain/transactionReferenceNumber";
 
 
 type MethodNames = 'init' | 'event';
@@ -28,7 +30,9 @@ export default (
     win: Window,
     defaultConfig: Configurations,
     scriptElement: Element | null,
-    render: (element: HTMLElement, config: Configurations) => void) => {
+    render: (element: HTMLElement, config: Configurations, merchant: Merchant) => void) => {
+
+    
 
     // get a hold of script tag instance, which has an
     // attribute `id` with unique identifier of the widget instance
@@ -65,18 +69,31 @@ export default (
                 if (loadedObject.debug) {
                     console.log(`Starting widget [${instanceName}]`, loadedObject);
                 }
-                const novaPayElement =  win.document.getElementById("nova-pay")
-                console.log(novaPayElement)
-                // the actual rendering of the widget
-                var wrappingElement = loadedObject.element ?? win.document.body;
-                if(novaPayElement != null)
-                    wrappingElement = novaPayElement
-                targetElement = wrappingElement.appendChild(win.document.createElement('div'));
-                targetElement.setAttribute('id', `widget-${instanceName}`);
-                render(targetElement, loadedObject);
+                if(defaultConfig.apiKey == "")
+                   throw new Error("Api key not provided")
+                
+                checkKey(defaultConfig.apiKey).then(
+                    res => {
+                        console.log(res)
+                        if(res == null){
+                            throw new Error("Api key not valid")
+                        }
 
-                // store indication that widget instance was initialized
-                win[`loaded-${instanceName}`] = true;
+                        const novaPayElement =  win.document.getElementById("nova-pay")
+                        console.log(novaPayElement)
+                        // the actual rendering of the widget
+                        var wrappingElement = loadedObject.element ?? win.document.body;
+                        if(novaPayElement != null)
+                            wrappingElement = novaPayElement
+                        targetElement = wrappingElement.appendChild(win.document.createElement('div'));
+                        targetElement.setAttribute('id', `widget-${instanceName}`);
+                        render(targetElement, loadedObject, res);
+        
+                        // store indication that widget instance was initialized
+                        win[`loaded-${instanceName}`] = true;
+                    }
+                )
+               
                 break;
             // TODO: here you can handle additional async interactions
             // with the widget from page (e.q. `_hw('refreshStats')`)

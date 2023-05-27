@@ -9,17 +9,17 @@ type TextAreaProps = {
     padX : Number,
     padY: Number,
     value: string,
-    onChanged?: () => void
+    onInput: (value: string) => void
 
 }
-const TextArea = ({value,label,placeholder,onChanged, name,  padY, padX,height,width} : TextAreaProps) => {
+const TextArea = ({value,label,placeholder,onInput, name,  padY, padX,height,width} : TextAreaProps) => {
     return (
        
         <div className="mb-4 w-full">
         <label className="block text-fidarrgray-900 text-sm font-bold mb-2" htmlFor="username">
             {label}
         </label>
-        <textarea name={name} value={value} onChange={onChanged} className={`resize rounded-md shadow appearance-none border  leading-tight focus:outline-none focus:shadow-outline  h-${height} w-${width} py-${padY} px-${padX} `}></textarea>
+        <textarea name={name} value={value} onInput={(e) => onInput(e.currentTarget.value)} className={`resize rounded-md shadow appearance-none border  leading-tight focus:outline-none focus:shadow-outline  h-${height} w-${width} py-${padY} px-${padX} `}></textarea>
     </div>
     )
 }

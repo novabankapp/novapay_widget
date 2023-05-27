@@ -3,6 +3,20 @@ import { Configurations } from "./config";
 import './style/index.css';
 import loader from "./loader";
 import { App } from "./App";
+import { merchantRepo } from "./main";
+import { Merchant } from "./domain/transactionReferenceNumber";
+
+export const checkKey = async (key: string) : Promise<Merchant | null> => {
+    try{
+       var response = await merchantRepo.validateMerchantApiKey(key)
+       return response.merchant
+    }
+    catch(err : any){
+         
+        console.log(err.message)
+        throw new Error("error validating api key")
+     }
+}
 
 /**
  * Default configurations that are overridden by
@@ -21,7 +35,7 @@ loader(
     window,
     defaultConfig,
     window.document.currentScript,
-    (el, config) => render(h(App, { ...config, element: el }), el));
+    (el, config, merchant) => render(h(App, { ...config, element: el, merchant: merchant }), el));
 
 
 /*export type ButtonConfig = {

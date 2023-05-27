@@ -8,14 +8,14 @@ type TextfieldProps = {
     placeholder: string,
     name: string,
     label: string,
-    onChanged?: () => void
+    onInput: (value: string) => void
 }
 
-export const TextField = ({value, onChanged, type, placeholder, name, label}: TextfieldProps) => {
+export const TextField = ({value, onInput: onInput, type, placeholder, name, label}: TextfieldProps) => {
     return (
         <div className="relative mb-6">
                     <input
-                    onChange={onChanged}
+                    onInput={(e) => onInput(e.currentTarget.value)}
                     type={type}  value={value} name={name} 
                     className="peer block min-h-[auto] w-full 
                     rounded border-0 bg-gray-100 px-3 py-[0.32rem] 
@@ -46,7 +46,7 @@ export const TextField = ({value, onChanged, type, placeholder, name, label}: Te
 
 
 
-export const PrimaryTextField = ({value,label,onChanged,placeholder, name,type,} : TextfieldProps) => {
+export const PrimaryTextField = ({value,label,onInput: onInput,placeholder, name,type,} : TextfieldProps) => {
   
     return (
     <div className={`mb-4 w-full`}>
@@ -54,7 +54,7 @@ export const PrimaryTextField = ({value,label,onChanged,placeholder, name,type,}
             {label}        
            </label> : ""
         }
-      <input value={value} name={name}  onChange={onChanged} className={`shadow appearance-none border rounded  w-full py-2 px-6 text-black leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
+      <input value={value} name={name}   onInput={(e) => onInput(e.currentTarget.value)} className={`shadow appearance-none border rounded  w-full py-2 px-6 text-black leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
     </div>
    )
 }

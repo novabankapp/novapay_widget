@@ -19,16 +19,16 @@ export const Main = () => {
         }
     };
      return (
-        <div className="fixed bottom-2.5 right-2.5 w-96">
+        <div className=" w-96">
              <div className="bg-white">   
-                {/*<div>{title}</div>  */}
+                {/* fixed bottom-2.5 right-2.5  */}
                 <div className={clsx("relative min-h-44 ",config.styles.classNameContainer)}>
                     {<Router
                         onChange={(r) => setTitle(getTitle(r))}
                         routes={{
                             '/': <RouteComponent component={GenerateTRNForm} />,
                              '/feedback': <RouteComponent component={GenerateTRNFeedback} />,
-                            //'/faq': <RouteComponent component={Faq} />
+                           
                         }} /> 
                     }
                 </div>
