@@ -25,7 +25,9 @@ export const checkKey = async (key: string) : Promise<Merchant | null> => {
 const defaultConfig: Configurations = {
     apiKey:"",
     debug: false,
-    styles: {}
+    widget: {
+       name: "form",
+    }
 };
 
 

@@ -73,7 +73,7 @@ export const useTransactionModelController = (repository: transactionRepository)
                 setFetchStatus(RequestStatus.Success)
                 setSuccess(true)
                 setTRN(response.trn)
-                setRoute("/feedback")
+                //setRoute("/feedback")
              }
              else{
                 setFetchStatus(RequestStatus.Error)

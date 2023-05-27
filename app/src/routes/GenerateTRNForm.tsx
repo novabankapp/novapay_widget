@@ -2,8 +2,6 @@ import { h } from "preact"
 import "./generateTRNform.css"
 import { useMemo, useState } from "preact/hooks";
 import { PrimaryTextField } from "../components/textfield";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import TextArea from "../components/TextArea";
 import { Button } from "../components/Button";
 import { useIsMounted } from "../hooks";

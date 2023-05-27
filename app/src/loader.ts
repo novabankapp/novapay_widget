@@ -79,12 +79,11 @@ export default (
                             throw new Error("Api key not valid")
                         }
 
-                        const novaPayElement =  win.document.getElementById("nova-pay")
+                        const novaPayElement =  defaultConfig.widget.parentId ? 
+                           win.document.getElementById(defaultConfig.widget.parentId) : loadedObject.element
                         console.log(novaPayElement)
                         // the actual rendering of the widget
-                        var wrappingElement = loadedObject.element ?? win.document.body;
-                        if(novaPayElement != null)
-                            wrappingElement = novaPayElement
+                        var wrappingElement = novaPayElement ?? win.document.body;
                         targetElement = wrappingElement.appendChild(win.document.createElement('div'));
                         targetElement.setAttribute('id', `widget-${instanceName}`);
                         render(targetElement, loadedObject, res);

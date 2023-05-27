@@ -1,13 +1,18 @@
 interface InfraConfigurations {
     element?: HTMLElement;
 }
-
+type WidgetName = "form" | "button"
 export interface AppConfigurations {
     debug: boolean;
     apiKey: string;
-    styles: {
-        classNameContainer?: string;
-    };
+    widget: {
+        name: WidgetName,
+        parentId?:string,
+        customerRef?: string,
+        amount?: number,
+        metadata?: string
+    }
+    
 }
 
 export type Configurations = InfraConfigurations & AppConfigurations;

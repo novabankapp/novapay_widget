@@ -10,24 +10,24 @@
     <h1>Help Widget Demo</h1>
   
 
-     <div id="nova-pay"></div>
-
+     <div id="nova-pay" style="width:300px;margin:50px;"></div>
+     <div id="nova-button" style="width:200px;margin:50px;"></div>
     <script>
         (function (w, d, s, o, f, js, fjs) {
             w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) };
             js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
             js.id = o; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);
         }(window, document, 'script', '_hw', './widget.js'));
-        _hw('init', { debug: true, apiKey : "123444" });
+        _hw('init', { debug: true, apiKey : "123444" ,widget: { name: "form", parentId:"nova-pay" }});
     </script>
-    <!--<script>
+    <script>
         (function (w, d, s, o, f, js, fjs) {
             w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) };
             js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
             js.id = o; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);
         }(window, document, 'script', 'aw1', './widget.js'));
-        aw1('init', { minimized: true, disableDarkMode: true });
-    </script>-->
+        aw1('init', {  apiKey : "123444" ,widget: { name: "button", parentId:"nova-button", customerRef: "1234", amount: 5000.00, metadata: "" } });
+    </script>
     <style>
         #widget-aw1 .main-root-hX4vn {
             top: 10px;
