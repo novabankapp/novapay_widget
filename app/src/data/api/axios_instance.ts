@@ -102,8 +102,8 @@ data : any
 
 export const  getAPI = async <IEntity,>(url : string ,extraHeaders: any | null = null, onDownloadProgress : undefined | any  = undefined) : Promise<IEntity> => {
   try { 
-    mockApi(axiosInstance)
-    axiosInstance = setupInterceptorsTo(axiosInstance)
+    //mockApi(axiosInstance)
+    //axiosInstance = setupInterceptorsTo(axiosInstance)
     var headers = extraHeaders != null ? {
       ...postConfig.headers,
       ...extraHeaders

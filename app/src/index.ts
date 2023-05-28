@@ -5,6 +5,7 @@ import loader from "./loader";
 import { App } from "./App";
 import { merchantRepo } from "./main";
 import { Merchant } from "./domain/transactionReferenceNumber";
+//import { getAPI } from "./data/api/axios_instance";
 
 export const checkKey = async (key: string) : Promise<Merchant | null> => {
     try{
@@ -17,6 +18,10 @@ export const checkKey = async (key: string) : Promise<Merchant | null> => {
         throw new Error("error validating api key")
      }
 }
+
+/*getAPI<any>("https://www.google.com").then(
+    res => console.log(res)
+)*/
 
 /**
  * Default configurations that are overridden by
