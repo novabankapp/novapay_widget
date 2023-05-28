@@ -2,7 +2,6 @@
 import { h } from "preact"
 import { Button } from "../components/Button"
 import { Spinner } from "../components/Spinner"
-import { useState } from "preact/hooks"
 import { useAppContext } from "../AppContext"
 import { RequestStatus, useTransactionModelController } from "../data/controllers/useTransactionModelController"
 import { transactionRepo } from "../main"
@@ -31,7 +30,7 @@ export const GenerateTRNButton = () => {
                <div className='w-full bg-primary-600 flex flex-col h-10 justify-center items-center rounded-md'>
                  <Spinner/>
                 </div> 
-                : <Button disabled={false} onClick={onSubmit}  type="button" title="Generate TRN" /> }
+                : <Button disabled={false} onClick={onSubmit}  type="button" title={trn != null ? "Regenerate":"Generate TRN"} /> }
         </div>
     )
 }
