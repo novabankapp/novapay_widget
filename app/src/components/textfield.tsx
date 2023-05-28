@@ -49,7 +49,7 @@ export const TextField = ({value, onInput: onInput, type, placeholder, name, lab
 export const PrimaryTextField = ({value,label,onInput: onInput,placeholder, name,type,} : TextfieldProps) => {
   
     return (
-    <div className={`mb-4 w-full`}>
+    <div className={` w-full`}>
         {label != null ? <label className="block text-gray-900 text-sm font-bold mb-1" htmlFor="username">
             {label}        
            </label> : ""

@@ -91,6 +91,7 @@ export const useTransactionModelController = (repository: transactionRepository)
       
         fetchStatus,
         successful,
+        setTRN,
         trn,
         validatedCustomerRef,
         generateTRN,

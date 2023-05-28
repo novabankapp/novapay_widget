@@ -14,7 +14,7 @@ export const GenerateTRNForm = () => {
     const mounted = useIsMounted();
     const config = useAppContext();
     
-    const {generateTRN,validateCustomerRef,validatedCustomerRef,successful,trn} = useTransactionModelController(transactionRepo)
+    const {generateTRN,validateCustomerRef,validatedCustomerRef,successful,setTRN,trn} = useTransactionModelController(transactionRepo)
     const [refValidated, setRefValidated] = useState(false)
     const [submitting, setSubmitting] = useState(false);
     const [validating, setValidating] = useState(false)
@@ -47,7 +47,14 @@ export const GenerateTRNForm = () => {
     const formValid = useMemo(
                 () => ![amountError, refError].reduce((m, n) => m + n) ,
                 [amountError, refError]);
-   
+    const reset = () => {
+            setTRN(null)
+            setAmount("0.00")
+            setCustomerRefValue("")
+            setMetadata("")
+            setRefValidated(false)
+            setValidating(false)
+    }
     const onSubmit = () => {
         if((amount.length < 1 || customerRefValue.length < 1)){
             setAmount(prev => amount)
@@ -72,7 +79,7 @@ export const GenerateTRNForm = () => {
     }
     return (
         <div className="flex flex-col space-y-6 md:space-y-0 bg-white  shadow rounded-lg justify-between">
-                <div className="bg-primary-600 w-full flex flex-col rounded bg-opacity-50">
+                <div className="bg-primary-600 w-full flex flex-col rounded bg-opacity-40">
                     <h1 className="mx-auto font-semibold mb-2">Generate Transaction Reference Pin</h1> 
                     {trn !=null ? <p className="text-red-600 font-bold">{`your TRN is : ${trn}`}</p> : null}
                    
@@ -89,16 +96,18 @@ export const GenerateTRNForm = () => {
                           
                             <div className='flex flex-col w-full'>
                                 <p className="text-red-600">{refError}</p>
-                                <div className="w-full flex flex-row gap-2 items-center">
+                                <div className="w-full flex flex-col  items-center">
                                 
                                     <PrimaryTextField  name="customerRef" onInput={(val) => setCustomerRefValue(val)} type="text" value={customerRefValue}    label="Customer Reference" placeholder="Customer Reference" />
+                                    <div className="self-start flex">
                                     {!validating ?
                                         <button onClick={validateRef} type="button"
-                                        className='text-primary-600 h-10 disabled:text-gray-100' 
+                                        className='text-primary-600 underline h-10 disabled:text-gray-100' 
                                         disabled={customerRefValue == "" || !config.merchantConfig.hasValidation}>
                                         Validate  
                                         </button>
                                     :  <div className=""> <Spinner color="#19A0CB"/></div> }
+                                    </div>
                                 </div>
                             </div>
 
@@ -115,15 +124,20 @@ export const GenerateTRNForm = () => {
                                 
                     
                             </div>
-
-                            <div className="w-full  self-start">
-                            {submitting ? 
-                            <div className='w-full bg-primary-600 flex flex-col h-10 justify-center items-center rounded-md'>
-                                 <Spinner/>
-                            </div> 
-                            : <Button disabled={!formValid || (config.merchantConfig.hasValidation && !refValidated)} 
-                                    type="submit" title="Generate" /> }
-                        </div>
+                            <div className="flex flex-row gap-2  w-full items-center">
+                                <div className=" w-1/2">
+                                    {submitting ? 
+                                    <div className='w-full bg-primary-600 flex flex-col h-10 justify-center items-center rounded-md'>
+                                        <Spinner/>
+                                    </div> 
+                                    : <Button disabled={!formValid || (config.merchantConfig.hasValidation && !refValidated)} 
+                                            type="submit" title="Generate" /> }
+                                </div>
+                                <div className=" w-1/2">
+                                    <button  className="w-full px-7 pb-2.5 pt-3 bg-novagray-500  text-white inline-block rounded">Reset</button>
+                                </div>
+                            </div>
+                           
                         
                         </div>
                     </form>
