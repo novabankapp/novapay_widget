@@ -4,7 +4,7 @@ import { ValidateMerchantResponse, merchantDataSource } from "./merchantDataSour
 
 export class merchantDataSourceImpl implements merchantDataSource{
     async validateMerchantApiKey(key: string): Promise<ValidateMerchantResponse> {
-        return await postAPI<ValidateMerchantResponse>("Merchant/validateApiKey", {key: key})
+        return await postAPI<ValidateMerchantResponse>("Merchants/validateApiKey", {key: key})
     }
     
 }

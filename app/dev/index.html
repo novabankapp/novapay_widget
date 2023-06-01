@@ -3,15 +3,38 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Demo page of the widget</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Student</title>
 </head>
 
 <body>
-    <h1>Help Widget Demo</h1>
+    <div class="bg-blue-600 h-screen flex flex-col">
+        <div class="mx-auto bg-white px-8 items-center my-auto flex flex-col">
+            <h1 class=" font-bold">Jane Banda</h1> 
+            <img class="h-56 w-48"  src="https://images.unsplash.com/photo-1588553693965-21878a40b5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80" />
+            <div class="">
+              <p class=" font-bold">Bio</p>
+              <p>A++ student passionate about nature and people. Dreams of studying Zoology</p>
+            </div>
+            <div class="self-start">
+                <p class=" font-bold">Class</p>
+                <p>Standard 6</p>
+            </div>
+            <div class="self-start">
+                <p class=" font-bold">Student ID</p>
+                <p>123456FF</p>
+            </div>
+            <div class="self-start mt-10 mb-10">
+                <!--<div id="nova-pay" style="width:300px;margin:50px;"></div>-->
+                <p class="font-bold text-red-600">Pay Fees for student</p>
+                <div id="nova-button" style="width:200px;"></div> 
+            </div>
+        </div>
+       
+    </div>
+   
   
 
-     <div id="nova-pay" style="width:300px;margin:50px;"></div>
-     <div id="nova-button" style="width:200px;margin:50px;"></div>
     <script>
         (function (w, d, s, o, f, js, fjs) {
             w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) };

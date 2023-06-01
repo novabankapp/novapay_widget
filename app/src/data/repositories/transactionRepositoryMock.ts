@@ -7,7 +7,7 @@ export class transactionRepositoryMock implements transactionRepository{
     generateTRN(request: CreateTRNRequest): Promise<CreateTRNResponse> {
         const res = {
             result: true,
-            trn: "1234"
+            trn: Math.floor(100000000 + Math.random() * 900000000).toString(),
         } as  CreateTRNResponse
         return new Promise(resolve => setTimeout(() => resolve(res), 5000)) ;
     }
