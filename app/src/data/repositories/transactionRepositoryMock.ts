@@ -8,6 +8,7 @@ export class transactionRepositoryMock implements transactionRepository{
         const res = {
             result: true,
             trn: Math.floor(100000000 + Math.random() * 900000000).toString(),
+            qrCode:"https://picsum.photos/200"
         } as  CreateTRNResponse
         return new Promise(resolve => setTimeout(() => resolve(res), 5000)) ;
     }

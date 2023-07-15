@@ -9,7 +9,7 @@ import { transactionRepo } from "../main"
 
 
 export const GenerateTRNButton = () => {
-    const {generateTRN,fetchStatus,successful,trn} = useTransactionModelController(transactionRepo)
+    const {generateTRN,fetchStatus,successful,trn,qrCode} = useTransactionModelController(transactionRepo)
     const config = useAppContext();
     
     const onSubmit = () => {
@@ -25,7 +25,16 @@ export const GenerateTRNButton = () => {
     }
     return (
         <div className="flex flex-col space-y-6 md:space-y-0 bg-white  shadow rounded-lg justify-between">
-             {trn && <div className="mx-auto"><p className="text-primary-600 font-bold">Your TRN is: {trn}</p></div>}
+             {trn && 
+                <div>
+                    {qrCode && 
+                        <div>
+                            <img src={qrCode} />
+                        </div>
+                   }
+                   <div className="mx-auto"><p className="text-primary-600 font-bold">Your TRN is: {trn}</p></div>
+                </div> 
+             }
              {fetchStatus == RequestStatus.Loading ? 
                <div className='w-full bg-primary-600 flex flex-col h-10 justify-center items-center rounded-md'>
                  <Spinner/>

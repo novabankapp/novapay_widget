@@ -5,7 +5,8 @@ export interface CreateTRNRequest{
  }
  export interface CreateTRNResponse{
      result: boolean
-     trn: string
+     trn: string,
+     qrCode: string
  }
  
  export interface ValidateReferenceRequest {

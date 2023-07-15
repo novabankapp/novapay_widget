@@ -27,6 +27,7 @@ export const useTransactionModelController = (repository: transactionRepository)
     const [fetchStatus, setFetchStatus] = useState<RequestStatus>();
     const [successful, setSuccess] = useState<boolean>(true)
     const [trn, setTRN] = useState<string |null>(null)
+    const [qrCode, setQRCode] = useState<string |null>(null)
     const [validatedCustomerRef, setValidatedCustomerRef] = useState<ValidatedCustomerRef|null>(null);
     const {setRoute} = useNavigation();
     
@@ -73,6 +74,7 @@ export const useTransactionModelController = (repository: transactionRepository)
                 setFetchStatus(RequestStatus.Success)
                 setSuccess(true)
                 setTRN(response.trn)
+                setTRN(response.qrCode)
                 //setRoute("/feedback")
              }
              else{
@@ -93,6 +95,7 @@ export const useTransactionModelController = (repository: transactionRepository)
         successful,
         setTRN,
         trn,
+        qrCode,
         validatedCustomerRef,
         generateTRN,
         validateCustomerRef,
