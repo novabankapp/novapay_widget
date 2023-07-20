@@ -38,7 +38,7 @@ var axiosInstance : AxiosInstance = axios
   
   const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
     if (error.response) {
-      // Access Token was expired
+      const originalRequest = error.config;
       if (
         error.response.status === 401 
       ) {       
@@ -70,6 +70,8 @@ var axiosInstance : AxiosInstance = axios
               
               tokenManager.saveTokenObj(token,refreshToken)
           }
+          originalRequest!.headers.Authorization = `Bearer ${tokenManager.getToken()}`;
+          return axiosInstance(originalRequest!);
         } catch (_error) {
           return Promise.reject(_error);
         }
