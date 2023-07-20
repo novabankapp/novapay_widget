@@ -68,6 +68,7 @@ export const useTransactionModelController = (repository: transactionRepository)
             setFetchStatus(RequestStatus.Loading)
             const response = await repository.generateTRN({
                 customerReference: data.customerReference,
+                serviceUniqueIdentifier : data.serviceUniqueIdentifier,
                 amount: data.amount,
                 metadata: data.metadata,
              });
@@ -75,7 +76,7 @@ export const useTransactionModelController = (repository: transactionRepository)
                 setFetchStatus(RequestStatus.Success)
                 setSuccess(true)
                 setTRN(response.trn)
-                setTRN(`${BASE_URL}${response.qrCode}`)
+                setQRCode(`${BASE_URL}/api/${response.qrCode}`)
                 //setRoute("/feedback")
              }
              else{

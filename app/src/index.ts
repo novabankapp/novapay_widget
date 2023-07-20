@@ -10,6 +10,7 @@ import { Merchant } from "./domain/transactionReferenceNumber";
 export const checkKey = async (key: string) : Promise<Merchant | null> => {
     try{
        var response = await merchantRepo.validateMerchantApiKey(key)
+       console.log(response)
        return response.merchant
     }
     catch(err : any){

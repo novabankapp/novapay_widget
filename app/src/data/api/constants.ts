@@ -1,6 +1,7 @@
 export const BASE_URL = process.env.PREACT_BASE_URL
 export const VALIDATE_REF = ""
-export const GENERATE_TRN = ""
+export const GENERATE_TRN = "api/transactions/generateTRN"
+export const VALIDATE_MERCHANT = "api/merchants/validateApiKey"
 export const AUTHENTICATE = ""
 export const REFRESH_TOKEN = ""
 export const CLIENT_ID =  process.env.PREACT_CLIENT_ID

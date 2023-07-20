@@ -14,7 +14,7 @@ export const GenerateTRNButton = () => {
     
     const onSubmit = () => {
          
-           console.log("clicked")
+           console.log(config)
            if(config.widget.customerRef != null && config.widget.amount != null)
                 generateTRN({
                     customerReference: config.widget.customerRef!,

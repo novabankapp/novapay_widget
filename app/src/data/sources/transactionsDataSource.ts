@@ -1,5 +1,6 @@
 export interface CreateTRNRequest{
     customerReference: string,
+    serviceUniqueIdentifier: string
     amount: number,
     metadata: any,
  }
