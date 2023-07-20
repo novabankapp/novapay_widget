@@ -35,7 +35,7 @@ const defaultConfig: Configurations = {
     }
 };
 
-
+console.log(process.env.PREACT_CLIENT_SECRET);
 
 // main entry point - calls loader and render Preact app into supplied element
 loader(

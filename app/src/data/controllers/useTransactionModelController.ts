@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks"
 import { transactionRepository } from "../repositories/transactionRepository"
 import { useNavigation } from "../../layouts/Router"
+import { BASE_URL } from "../api/constants"
 
 export enum RequestStatus {
   Loading,
@@ -74,7 +75,7 @@ export const useTransactionModelController = (repository: transactionRepository)
                 setFetchStatus(RequestStatus.Success)
                 setSuccess(true)
                 setTRN(response.trn)
-                setTRN(response.qrCode)
+                setTRN(`${BASE_URL}${response.qrCode}`)
                 //setRoute("/feedback")
              }
              else{

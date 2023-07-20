@@ -9,7 +9,10 @@ InternalAxiosRequestConfig} from 'axios'
 //mock
 import MockAdapter from 'axios-mock-adapter';
 import Params from './params';
-import { BASE_URL } from './constants';
+import { AUTHENTICATE, BASE_URL, CLIENT_ID, CLIENT_SECRET, GRANT_TYPE, REFRESH_TOKEN } from './constants';
+import { tokenManager } from './token';
+import { config } from 'dotenv';
+import querystring from 'querystring';
 
 
 var axiosInstance : AxiosInstance = axios
@@ -19,8 +22,8 @@ var axiosInstance : AxiosInstance = axios
   
   const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     
-   // if(config.headers != null)
-       // config.headers!.Authorization = `Bearer ${tokenManager.getToken()}`;
+    if(config.headers != null)
+       config.headers!.Authorization = `Bearer ${tokenManager.getToken()}`;
   
     return config;
   };
@@ -40,16 +43,33 @@ var axiosInstance : AxiosInstance = axios
         error.response.status === 401 
       ) {       
   
+        
         try {
-          /*const rs = await axios.post(`${BASE_URL}/Token/refresh`, {
-            refresh_token: tokenManager.getRefreshToken(),
-          });
-  
-          const { token, refreshToken } = rs.data;
-          
-          tokenManager.saveTokenObj(token,refreshToken)*/
-  
-          //return;
+          const tokenExits = tokenManager.getToken() == null ? true : false
+          if(tokenExits){
+                const rs = await axios.post(`${BASE_URL}${AUTHENTICATE}`, querystring.stringify({                
+                    client_id: CLIENT_ID,
+                    client_secret: CLIENT_SECRET,
+                    grant_type : GRANT_TYPE
+                }),{
+                  headers: { 
+                    "Content-Type": "application/x-www-form-urlencoded"
+                  }
+                });
+        
+                const { token, refreshToken } = rs.data;
+                
+                tokenManager.saveTokenObj(token,refreshToken)
+          }
+          else{
+              const rs = await axios.post(`${BASE_URL}${REFRESH_TOKEN}`, {
+                refresh_token: tokenManager.getRefreshToken(),
+              });
+      
+              const { token, refreshToken } = rs.data;
+              
+              tokenManager.saveTokenObj(token,refreshToken)
+          }
         } catch (_error) {
           return Promise.reject(_error);
         }
@@ -81,7 +101,7 @@ var axiosInstance : AxiosInstance = axios
 
 
 const postConfig : Params = {
-  baseUrl: BASE_URL,
+  baseUrl: BASE_URL!,
   headers: {
               //"Authorization": `Bearer ${tokenManager.getToken()}`,
               //"Content-Type": "multipart/form-data",
@@ -89,7 +109,7 @@ const postConfig : Params = {
   method: 'post'
 }
 const getConfig : Params = {
-  baseUrl: BASE_URL,
+  baseUrl: BASE_URL!,
   headers: {
           //"Authorization": `Bearer ${tokenManager.getToken()}`
   },

@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 var copyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env) => {
@@ -17,13 +18,18 @@ module.exports = (env) => {
         port: 4000,
     },
     plugins: isDevBuild
-    ? [new webpack.SourceMapDevToolPlugin(), new copyWebpackPlugin({ 
+    ? [
+      new Dotenv({ systemvars: true, path: path.resolve(__dirname, '.env') }),
+      new webpack.SourceMapDevToolPlugin(), new copyWebpackPlugin({ 
         patterns: [
           { from: 'dev/' },
       
         ]
-      })]
-    : [],
+      })
+    ]
+    : [
+      new Dotenv({ systemvars: true, path: path.resolve(__dirname, '../.env') })
+    ],
     optimization: {
         minimize: !isDevBuild
     },
