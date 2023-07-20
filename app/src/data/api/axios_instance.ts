@@ -133,7 +133,7 @@ export const  getAPI = async <IEntity,>(url : string ,extraHeaders: any | null =
       const {data, status} = await axiosInstance<IEntity>({
         headers: headers,
         method: "get",
-        url: `${getConfig.baseUrl}/${url}/`,
+        url: `${getConfig.baseUrl}${url}/`,
         onDownloadProgress: onDownloadProgress
     });
     return data
@@ -150,13 +150,13 @@ export  const postAPI = async <IEntity,> (url: string, payload : any, extraHeade
 try{
    //mockApi(axiosInstance)
    axiosInstance = setupInterceptorsTo(axiosInstance)
-   console.log(`${postConfig.baseUrl}/${url}`)
+   console.log(`${postConfig.baseUrl}${url}`)
    var headers = extraHeaders != null ? {
     ...postConfig.headers,
     ...extraHeaders
    } : postConfig.headers;
    const {data, status } = await axiosInstance<IEntity>({        
-      url: `${postConfig.baseUrl}/${url}`,
+      url: `${postConfig.baseUrl}${url}`,
       data: payload,
       method: "post",
       headers : headers,

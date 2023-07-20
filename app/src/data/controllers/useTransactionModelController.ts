@@ -76,7 +76,7 @@ export const useTransactionModelController = (repository: transactionRepository)
                 setFetchStatus(RequestStatus.Success)
                 setSuccess(true)
                 setTRN(response.trn)
-                setQRCode(`${BASE_URL}/api/${response.qrCode}`)
+                setQRCode(`${BASE_URL}${response.qrCode}`)
                 //setRoute("/feedback")
              }
              else{
