@@ -46,7 +46,7 @@ var axiosInstance : AxiosInstance = axios
         
         try {
           const tokenExits = tokenManager.getToken() == null ? true : false
-          if(tokenExits){
+         // if(!tokenExits){
                 const rs = await axios.post(`${BASE_URL}${AUTHENTICATE}`, querystring.stringify({                
                     client_id: CLIENT_ID,
                     client_secret: CLIENT_SECRET,
@@ -57,11 +57,11 @@ var axiosInstance : AxiosInstance = axios
                   }
                 });
         
-                const { token, refreshToken } = rs.data;
-                
-                tokenManager.saveTokenObj(token,refreshToken)
-          }
-          else{
+                const { access_token} = rs.data;
+                console.log(access_token)
+                tokenManager.saveTokenObj(access_token,"")
+          //}
+          /*else{
               const rs = await axios.post(`${BASE_URL}${REFRESH_TOKEN}`, {
                 refresh_token: tokenManager.getRefreshToken(),
               });
@@ -69,8 +69,9 @@ var axiosInstance : AxiosInstance = axios
               const { token, refreshToken } = rs.data;
               
               tokenManager.saveTokenObj(token,refreshToken)
-          }
+          }*/
           originalRequest!.headers.Authorization = `Bearer ${tokenManager.getToken()}`;
+         
           return axiosInstance(originalRequest!);
         } catch (_error) {
           return Promise.reject(_error);
