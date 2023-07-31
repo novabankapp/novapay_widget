@@ -29,6 +29,7 @@ export const useTransactionModelController = (repository: transactionRepository)
     const [successful, setSuccess] = useState<boolean>(true)
     const [trn, setTRN] = useState<string |null>(null)
     const [qrCode, setQRCode] = useState<string |null>(null)
+    const [error, setError] = useState<string |null>(null)
     const [validatedCustomerRef, setValidatedCustomerRef] = useState<ValidatedCustomerRef|null>(null);
     const {setRoute} = useNavigation();
     
@@ -96,6 +97,7 @@ export const useTransactionModelController = (repository: transactionRepository)
         fetchStatus,
         successful,
         setTRN,
+        error,
         trn,
         qrCode,
         validatedCustomerRef,

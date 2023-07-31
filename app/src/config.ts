@@ -1,7 +1,7 @@
 interface InfraConfigurations {
     element?: HTMLElement;
 }
-type WidgetName = "form" | "button"
+type WidgetName = "form" | "button" | "auto"
 export interface AppConfigurations {
     debug: boolean;
     apiKey: string;
