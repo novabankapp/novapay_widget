@@ -1,8 +1,9 @@
 {
-  "name": "novapaywidget",
-  "version": "1.0.0",
+  "name": "@novabankapp/novapaywidget",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
+  
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "build-release": "webpack --config webpack.config.js --env.prod --display-modules",

@@ -14,7 +14,7 @@ export const checkKey = async (key: string) : Promise<Merchant | null> => {
        return response.merchant
     }
     catch(err : any){
-         
+        console.log(err)
         console.log(err.message)
         throw new Error("error validating api key")
      }
